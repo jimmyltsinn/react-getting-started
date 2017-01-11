@@ -3,18 +3,49 @@ import ReactDOM from 'react-dom';
 
 // let hihi = 'gg';
 
+class Toogle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      on: props.on,
+      text: props.text,
+    };
+    this.handleClick = this.handleClick.bind(this); // Bind 'this' for handleClick handler
+  }
+
+  handleClick() {
+    this.setState((prevState, props) => {
+      props.onHandle(!prevState.on);
+      return {on: !prevState.on};
+    });
+
+  }
+
+  render() {
+    return <button onClick={this.handleClick}>{this.state.text || ''}{this.state.on ? 'YES' : 'NO'}</button>;
+  }
+}
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = { date: new Date() };
   }
 
+  toUpdate(on) {
+    if (on)
+      this.timer = setInterval(() => this.tick(), 1000);
+    else
+      clearInterval(this.timer);
+  }
+
+
   componentDidMount() {
-    this.timer = setInterval(() => this.tick(), 1000);
+    this.toUpdate(true);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    this.toUpdate(false);
   }
 
   tick() {
@@ -24,7 +55,12 @@ class Clock extends React.Component {
   }
 
   render() {
-    return <div>Current time is {this.state.date.toLocaleTimeString()}</div>;
+    return <div>Current time is {this.state.date.toLocaleTimeString()}
+      <Toogle
+        text="update? "
+        on="true"
+        onHandle={this.toUpdate.bind(this)}
+      /></div>; // Remember to bind this for the callback method
   }
 }
 
