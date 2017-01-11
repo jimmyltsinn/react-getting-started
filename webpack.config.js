@@ -31,6 +31,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Hihi world',
       template: './src/index.ejs'
-    })
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        // NODE_ENV: JSON.stringify('production')
+      }
+    }),
   ]
 };
