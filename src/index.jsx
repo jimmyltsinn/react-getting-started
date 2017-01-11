@@ -3,11 +3,34 @@ import ReactDOM from 'react-dom';
 
 // let hihi = 'gg';
 
-let clock = () => <div>Current time is {new Date().toLocaleTimeString()}</div>;
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
 
-let update = () => {
-  ReactDOM.render(clock(), document.getElementById('root'));
-};
+  componentDidMount() {
+    this.timer = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return <div>Current time is {this.state.date.toLocaleTimeString()}</div>;
+  }
+}
+
+// let update = () => {
+ReactDOM.render(<Clock />, document.getElementById('root'));
+// };
 
 // ReactDOM.render(
 //   <h1>Hello, world! {hihi}</h1>,
@@ -21,5 +44,3 @@ let update = () => {
 //   );
 //   ReactDOM.render(element, document.getElementById('root'));
 // };
-
-setInterval(update, 1000);
