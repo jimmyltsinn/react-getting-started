@@ -26,6 +26,12 @@ class Toogle extends React.Component {
   }
 }
 
+Toogle.propTypes = {
+  on: React.PropTypes.bool.isRequired,
+  text: React.PropTypes.string,
+  onHandle: React.PropTypes.func.isRequired
+};
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +64,7 @@ class Clock extends React.Component {
     return <div>Current time is {this.state.date.toLocaleTimeString()}
       <Toogle
         text="update? "
-        on="true"
+        on={true}
         onHandle={this.toUpdate.bind(this)}
       /></div>; // Remember to bind this for the callback method
   }
